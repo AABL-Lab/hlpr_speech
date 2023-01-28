@@ -47,10 +47,17 @@ import os
 from geometry_msgs.msg import TransformStamped, Transform, Vector3, Quaternion
 from std_msgs.msg import Header
 import hlpr_dialogue_production.msg as dialogue_msgs
-import hlpr_record_demonstration.msg as record_msgs
-import hlpr_lookat.msg as lookat_msgs
-import hlpr_lookat.msg
-
+try: 
+	import hlpr_record_demonstration.msg as record_msgs
+except ImportError:
+	hlpr_record_demonstration=None
+	record_msgs=None
+try: 
+	import hlpr_lookat.msg as lookat_msgs
+	import hlpr_lookat.msg
+except ImportError:
+	hlpr_lookat = None
+	lookat_msgs = None
 
 from hlpr_dialogue_production.dialogue import ControllerState
 import actionlib_tutorials.msg
