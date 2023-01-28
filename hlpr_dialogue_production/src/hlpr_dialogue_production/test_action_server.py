@@ -42,7 +42,7 @@ class TestActionServer():
         self._as.start()
 
     def execute_cb(self, goal):
-        print "Got goal: {}".format(goal)
+        print("Got goal: {}".format(goal))
         os.system("aplay ~/code/sandbox/contingency/src/contingency/short_chime.wav")
         self._as.set_succeeded(actionlib_tutorials.msg.FibonacciResult())
 
