@@ -48,7 +48,7 @@ if __name__ == "__main__":
     while not rospy.is_shutdown():
         print("Say what?")
         try:
-            s = raw_input()
+            s = input()
         except KeyboardInterrupt:
             print("")
             print("bye!")

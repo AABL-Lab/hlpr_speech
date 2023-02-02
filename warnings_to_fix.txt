@@ -1,0 +1,5 @@
+/opt/ros/noetic/lib/sound_play/soundplay_node.py:330: PyGIDeprecationWarning: Since version 3.11, calling threads_init is no longer needed. See: https://wiki.gnome.org/PyGObject/Threading
+  GObject.threads_init()
+/opt/ros/noetic/lib/sound_play/soundplay_node.py:331: PyGIDeprecationWarning: GObject.MainLoop is deprecated; use GLib.MainLoop instead
+  self.g_loop = threading.Thread(target=GObject.MainLoop().run)
+pygame 2.1.2 (SDL 2.0.16, Python 3.8.10)
