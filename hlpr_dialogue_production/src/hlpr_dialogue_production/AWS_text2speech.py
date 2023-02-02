@@ -124,10 +124,10 @@ class TextToSpeech():
 		output_data = []
 		if "AudioStream" in response:
 			with closing(response["AudioStream"]) as stream:
-				data = stream.read()
-
-				s = data.split('\n') 
-				s = [json.loads(line) for line in s if line != '']
+				data = stream.read().decode(encoding='utf-8')
+				s = data.split('\n')
+				#print("s is", s)
+				s = [json.loads(line) for line in s if line != ""]
 		else:
 			print("Could not stream audio")
 			return untagged_text, []
