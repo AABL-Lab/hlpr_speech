@@ -268,7 +268,7 @@ def get_viseme_controller():
     """
 
     
-    time_adj = {"viseme":0.0}
+    time_adj = {"viseme":-0.7}
     
     behaviors=time_adj.keys()
     
