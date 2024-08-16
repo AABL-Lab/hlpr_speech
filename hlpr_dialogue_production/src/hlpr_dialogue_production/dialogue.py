@@ -133,6 +133,12 @@ class ControllerState(smach.State):
         self._can_handle = behaviors
         self._cb = arg_list_to_goal_cb
         self._client = actionlib.SimpleActionClient(topic,action_type)
+        if not self._client.wait_for_server(timeout=rospy.Duration(5)):
+            rospy.logerr("Controller {} timed out trying to connect to ActionServer. Start the ActionServer and restart the dialogue node".format(self.name))
+
+            
+            self._client=None
+            
         self._sync = None
         if behavior_time_adj!=None:
             self._time_adj = behavior_time_adj
@@ -156,6 +162,9 @@ class ControllerState(smach.State):
         self._sync=synchronizer
 
     def execute(self,userdata):
+        if self._client==None:
+            rospy.logerr("Controller {} was unable to connect to ActionServer. Start the ActionServer and restart the dialogue node".format(self.name))
+            return "done"
         if userdata.ordered_behaviors==None:
             rospy.logwarn("Controller {} got empty behavior list".format(self.name))
             return "done"

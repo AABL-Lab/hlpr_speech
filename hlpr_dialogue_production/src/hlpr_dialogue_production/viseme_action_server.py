@@ -29,6 +29,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import rospy
+from  rospy.exceptions import ROSException
 import actionlib
 from poli_msgs.srv import LedEye, LedEyeRequest
 import hlpr_dialogue_production.msg as dialogue_msgs
@@ -36,7 +37,17 @@ import hlpr_dialogue_production.msg as dialogue_msgs
 class LedVisemeActionServer:
     def __init__(self):
         self._as = actionlib.SimpleActionServer("HLPR_Visemes",dialogue_msgs.VisemeAction, execute_cb=self.execute_cb, auto_start=False)
-        rospy.wait_for_service("/led_eye")
+        connected=False
+        while not connected:
+            try:
+                rospy.wait_for_service("/led_eye", timeout=1)
+                connected=True
+                
+            except ROSException as e:
+                if rospy.is_shutdown():
+                    exit(-1)
+                rospy.logerr("LED Service not found. Waiting for LED Service")
+            
         self.change_eye = rospy.ServiceProxy("/led_eye",LedEye)
         self.viseme_mapping = {"p": LedEyeRequest.FLAT,
                                "t": LedEyeRequest.FLAT,
